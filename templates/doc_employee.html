@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; line-height: 1.6; padding: 50px; color: #333; }
+        .header { text-align: right; margin-bottom: 50px; }
+        .content { max-width: 800px; margin: auto; }
+        .amount-table { width: 100%; border-top: 2px solid #333; border-bottom: 2px solid #333; margin: 20px 0; padding: 10px 0; }
+        .amount-row { display: flex; justify-content: space-between; padding: 5px 0; }
+        .total-row { font-weight: bold; font-size: 1.2rem; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 10px; }
+        @media print { .no-print { display: none; } }
+    </style>
+</head>
+<body onload="window.print()">
+    <div class="no-print" style="background: #fff3cd; padding: 10px; text-align: center; border: 1px solid #ffeeba;">
+        Reviewing Document for: <strong>{{ result.employee_name }}</strong>. Press Ctrl+P to save as PDF.
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <strong>Human Resources Department</strong><br>
+            Date: 2026-05-09
+        </div>
+
+        <p>Private & Confidential</p>
+        <p><strong>{{ result.employee_name }}</strong></p>
+
+        <p>Dear {{ result.employee_name }},</p>
+
+        <p>Following our recent discussions, we are writing to formally outline the financial components of your severance package. Based on your employment records, your final entitlement is calculated as follows:</p>
+
+        <div class="amount-table">
+            <div class="amount-row">
+                <span>Statutory Redundancy Payment</span>
+                <span>£{{ "{:,.2f}".format(result.statutory_pay) }}</span>
+            </div>
+            <div class="amount-row">
+                <span>Prorated Bonus Payment (Feb 1st to {{ data.end_date }})</span>
+                <span>£{{ "{:,.2f}".format(result.bonus_pay) }}</span>
+            </div>
+            <div class="amount-row total-row">
+                <span>Total Gross Payment</span>
+                <span>£{{ "{:,.2f}".format(result.total_package) }}</span>
+            </div>
+        </div>
+
+        <p>The redundancy payment was calculated based on your {{ result.years_of_service }} full years of service and your age in accordance with UK statutory guidelines. The bonus payment has been prorated for the {{ result.bonus_days }} days worked within the current bonus cycle.</p>
+
+        <p>Please note that these figures are gross and may be subject to statutory deductions where applicable. If you have any questions regarding these calculations, please contact the HR department.</p>
+
+        <br>
+        <p>Sincerely,</p>
+        <br>
+        <p><strong>The Human Resources Team</strong></p>
+    </div>
+</body>
+</html>
